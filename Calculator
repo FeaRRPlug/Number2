@@ -1,0 +1,84 @@
+using System;
+
+class Calculator
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Добро пожаловать в простой калькулятор!");
+
+        while (true)
+        {
+            // Ввод первого числа
+            Console.Write("Введите первое число: ");
+            double num1 = GetValidNumber();
+
+            // Ввод второго числа
+            Console.Write("Введите второе число: ");
+            double num2 = GetValidNumber();
+
+            // Выбор операции
+            Console.WriteLine("Выберите операцию:");
+            Console.WriteLine("+ для сложения");
+            Console.WriteLine("- для вычитания");
+            Console.WriteLine("* для умножения");
+            Console.WriteLine("/ для деления");
+            Console.Write("Операция: ");
+            char operation = Console.ReadLine()[0];
+
+            double result = 0;
+            bool isValidOperation = true;
+
+            // Выполнение выбранной операции
+            switch (operation)
+            {
+                case '+':
+                    result = num1 + num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    break;
+                case '/':
+                    if (num2 != 0)
+                        result = num1 / num2;
+                    else
+                    {
+                        Console.WriteLine("Ошибка: деление на ноль!");
+                        isValidOperation = false;
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Неверная операция!");
+                    isValidOperation = false;
+                    break;
+            }
+
+            // Вывод результата
+            if (isValidOperation)
+                Console.WriteLine($"Результат: {result}");
+
+            // Спросить, хочет ли пользователь продолжить
+            Console.Write("Хотите выполнить еще одну операцию? (да/нет): ");
+            string continueChoice = Console.ReadLine().ToLower();
+            if (continueChoice != "да" && continueChoice != "yes")
+                break;
+        }
+
+        Console.WriteLine("Спасибо за использование калькулятора!");
+    }
+
+    // Метод для получения корректного числового ввода от пользователя
+    static double GetValidNumber()
+    {
+        while (true)
+        {
+            string input = Console.ReadLine();
+            if (double.TryParse(input, out double number))
+                return number;
+            else
+                Console.WriteLine("Неверный ввод. Пожалуйста, введите число:");
+        }
+    }
+}
